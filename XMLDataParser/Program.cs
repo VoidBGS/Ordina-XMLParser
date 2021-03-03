@@ -66,7 +66,7 @@ namespace XMLDataParser
                         case "TreinNummer": Console.WriteLine(subReader.LocalName + ": " + subReader.ReadElementContentAsString()); break;
                         case "TreinSoort": Console.WriteLine(subReader.LocalName + ": " + subReader.ReadElementContentAsString()); break;
                         case "Vervoerder": Console.WriteLine(subReader.LocalName + ": " + subReader.ReadElementContentAsString()); break;
-                        case "TreinEindBestemming": ExtractTrainDestination(subReader); break;
+                        case "TreinEindBestemming": ExtractTrainDestination(subReader.ReadSubtree(), subReader.GetAttribute("InfoStatus")); break;
                         case "VertrekTijd": Console.WriteLine(subReader.LocalName + ": " + subReader.ReadElementContentAsString()); break;
                         case "ExacteVertrekVertraging": Console.WriteLine(subReader.LocalName + ": " + subReader.ReadElementContentAsString()); break;
                     }
@@ -74,9 +74,9 @@ namespace XMLDataParser
             }
         }
 
-        private static void ExtractTrainDestination(XmlReader subReader)
+        private static void ExtractTrainDestination(XmlReader subReader, string _status)
         {
-            string status = subReader.GetAttribute("InfoStatus");
+            string status = _status;
 
             while (subReader.Read())
             {

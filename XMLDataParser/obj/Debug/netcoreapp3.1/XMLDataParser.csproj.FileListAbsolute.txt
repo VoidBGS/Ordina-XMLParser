@@ -1,0 +1,13 @@
+D:\Users\admin\Desktop\University 2021\Projects\XMLDataParser\XMLDataParser\bin\Debug\netcoreapp3.1\XMLDataParser.exe
+D:\Users\admin\Desktop\University 2021\Projects\XMLDataParser\XMLDataParser\bin\Debug\netcoreapp3.1\XMLDataParser.deps.json
+D:\Users\admin\Desktop\University 2021\Projects\XMLDataParser\XMLDataParser\bin\Debug\netcoreapp3.1\XMLDataParser.runtimeconfig.json
+D:\Users\admin\Desktop\University 2021\Projects\XMLDataParser\XMLDataParser\bin\Debug\netcoreapp3.1\XMLDataParser.runtimeconfig.dev.json
+D:\Users\admin\Desktop\University 2021\Projects\XMLDataParser\XMLDataParser\bin\Debug\netcoreapp3.1\XMLDataParser.dll
+D:\Users\admin\Desktop\University 2021\Projects\XMLDataParser\XMLDataParser\bin\Debug\netcoreapp3.1\XMLDataParser.pdb
+D:\Users\admin\Desktop\University 2021\Projects\XMLDataParser\XMLDataParser\obj\Debug\netcoreapp3.1\XMLDataParser.csprojAssemblyReference.cache
+D:\Users\admin\Desktop\University 2021\Projects\XMLDataParser\XMLDataParser\obj\Debug\netcoreapp3.1\XMLDataParser.AssemblyInfoInputs.cache
+D:\Users\admin\Desktop\University 2021\Projects\XMLDataParser\XMLDataParser\obj\Debug\netcoreapp3.1\XMLDataParser.AssemblyInfo.cs
+D:\Users\admin\Desktop\University 2021\Projects\XMLDataParser\XMLDataParser\obj\Debug\netcoreapp3.1\XMLDataParser.csproj.CoreCompileInputs.cache
+D:\Users\admin\Desktop\University 2021\Projects\XMLDataParser\XMLDataParser\obj\Debug\netcoreapp3.1\XMLDataParser.dll
+D:\Users\admin\Desktop\University 2021\Projects\XMLDataParser\XMLDataParser\obj\Debug\netcoreapp3.1\XMLDataParser.pdb
+D:\Users\admin\Desktop\University 2021\Projects\XMLDataParser\XMLDataParser\obj\Debug\netcoreapp3.1\XMLDataParser.genruntimeconfig.cache

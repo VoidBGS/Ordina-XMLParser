@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Xml;
-using System.Xml.Linq;
 
 namespace XMLDataParser
 {
@@ -10,8 +8,6 @@ namespace XMLDataParser
         {
             /* 
              * TODO:
-             * Classes n' Objects
-             * .env file
              * Dynamic Filepath
              * Do something with the data
              * 
@@ -19,73 +15,25 @@ namespace XMLDataParser
 
             const string PATH = "D:/Users/admin/Desktop/University 2021/Projects/XMLDataParser/CleanedXML.xml";
 
-            XmlReader xmlReader = XmlReader.Create(PATH);
+            Parser parser = new Parser(PATH);
 
-            xmlReader.MoveToContent();
+            parser.Initialize();
 
-            while (xmlReader.Read())
+            Logger.Log("Do you wish to display the parsed data? (Y/N)");
+
+            string viewData = Console.ReadLine();
+
+            if(viewData.ToUpper() == "Y")
             {
-                if (xmlReader.NodeType == XmlNodeType.Element && xmlReader.LocalName == "RitStation")
-                {
-                    Console.WriteLine("---------------------------------");
-                    Console.WriteLine("********** " + xmlReader.LocalName + " ***********");
-                    ExtractStationDetails(xmlReader.ReadSubtree());
-                }
-
-                if (xmlReader.NodeType == XmlNodeType.Element && xmlReader.LocalName == "Trein")
-                {
-                    Console.WriteLine("********** " + xmlReader.LocalName + " ***********");
-                    ExtractTrainDetails(xmlReader.ReadSubtree());
-                }
+                Logger.LogData(parser.GetAllParsedTrains(), parser.GetAllParsedStations());
             }
-        }
 
-        private static void ExtractStationDetails(XmlReader subReader)
-        {
-            while (subReader.Read())
-            {
-                if (subReader.NodeType == XmlNodeType.Element)
-                {
-                    switch (subReader.LocalName)
-                    {
-                        case "StationCode": Console.WriteLine(subReader.LocalName + ": " + subReader.ReadElementContentAsString()); break;
-                        case "LangeNaam": Console.WriteLine(subReader.LocalName + ": " + subReader.ReadElementContentAsString()); break;
-                    }
-                }
-            }
-        }
+            Logger.Log("Do you wish to save the parsed data? (Y/N)");
 
-        private static void ExtractTrainDetails(XmlReader subReader)
-        {
-            while (subReader.Read())
-            {
-                if (subReader.NodeType == XmlNodeType.Element)
-                {
-                    switch (subReader.LocalName)
-                    {
-                        case "TreinNummer": Console.WriteLine(subReader.LocalName + ": " + subReader.ReadElementContentAsString()); break;
-                        case "TreinSoort": Console.WriteLine(subReader.LocalName + ": " + subReader.ReadElementContentAsString()); break;
-                        case "Vervoerder": Console.WriteLine(subReader.LocalName + ": " + subReader.ReadElementContentAsString()); break;
-                        case "TreinEindBestemming": ExtractTrainDestination(subReader.ReadSubtree(), subReader.GetAttribute("InfoStatus")); break;
-                        case "VertrekTijd": Console.WriteLine(subReader.LocalName + ": " + subReader.ReadElementContentAsString()); break;
-                        case "ExacteVertrekVertraging": Console.WriteLine(subReader.LocalName + ": " + subReader.ReadElementContentAsString()); break;
-                    }
-                }
-            }
-        }
+            string saveData = Console.ReadLine();
 
-        private static void ExtractTrainDestination(XmlReader subReader, string _status)
-        {
-            string status = _status;
+            Logger.Log(saveData);
 
-            while (subReader.Read())
-            {
-                if(subReader.NodeType == XmlNodeType.Element && subReader.LocalName == "StationCode")
-                {
-                    Console.WriteLine(subReader.LocalName + ": " + subReader.ReadElementContentAsString() + " - " + status);
-                    break;
-                }
-            }
         }
 
     }

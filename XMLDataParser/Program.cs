@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Xml;
-using System.Xml.Linq;
 
 namespace XMLDataParser
 {
@@ -10,82 +8,39 @@ namespace XMLDataParser
         {
             /* 
              * TODO:
-             * Classes n' Objects
-             * .env file
-             * Dynamic Filepath
              * Do something with the data
              * 
              */
 
-            const string PATH = "D:/Users/admin/Desktop/University 2021/Projects/XMLDataParser/CleanedXML.xml";
+            string PATH = FileLoader.OpenPathFile();
 
-            XmlReader xmlReader = XmlReader.Create(PATH);
-
-            xmlReader.MoveToContent();
-
-            while (xmlReader.Read())
+            if(PATH == "File path not found.")
             {
-                if (xmlReader.NodeType == XmlNodeType.Element && xmlReader.LocalName == "RitStation")
-                {
-                    Console.WriteLine("---------------------------------");
-                    Console.WriteLine("********** " + xmlReader.LocalName + " ***********");
-                    ExtractStationDetails(xmlReader.ReadSubtree());
-                }
-
-                if (xmlReader.NodeType == XmlNodeType.Element && xmlReader.LocalName == "Trein")
-                {
-                    Console.WriteLine("********** " + xmlReader.LocalName + " ***********");
-                    ExtractTrainDetails(xmlReader.ReadSubtree());
-                }
+                Logger.Log("Please add the full path to your file.");
+                PATH = Console.ReadLine();
+                FileLoader.SavePathFile(PATH);
             }
-        }
 
-        private static void ExtractStationDetails(XmlReader subReader)
-        {
-            while (subReader.Read())
+            Parser parser = new Parser(PATH);
+
+            parser.Initialize();
+
+            Logger.Log("Do you wish to display the parsed data? (Y/N)");
+
+            string viewData = Console.ReadLine();
+
+            if(viewData.ToUpper() == "Y")
             {
-                if (subReader.NodeType == XmlNodeType.Element)
-                {
-                    switch (subReader.LocalName)
-                    {
-                        case "StationCode": Console.WriteLine(subReader.LocalName + ": " + subReader.ReadElementContentAsString()); break;
-                        case "LangeNaam": Console.WriteLine(subReader.LocalName + ": " + subReader.ReadElementContentAsString()); break;
-                    }
-                }
+                Logger.LogData(parser.GetAllParsedTrains(), parser.GetAllParsedStations());
             }
-        }
 
-        private static void ExtractTrainDetails(XmlReader subReader)
-        {
-            while (subReader.Read())
-            {
-                if (subReader.NodeType == XmlNodeType.Element)
-                {
-                    switch (subReader.LocalName)
-                    {
-                        case "TreinNummer": Console.WriteLine(subReader.LocalName + ": " + subReader.ReadElementContentAsString()); break;
-                        case "TreinSoort": Console.WriteLine(subReader.LocalName + ": " + subReader.ReadElementContentAsString()); break;
-                        case "Vervoerder": Console.WriteLine(subReader.LocalName + ": " + subReader.ReadElementContentAsString()); break;
-                        case "TreinEindBestemming": ExtractTrainDestination(subReader.ReadSubtree(), subReader.GetAttribute("InfoStatus")); break;
-                        case "VertrekTijd": Console.WriteLine(subReader.LocalName + ": " + subReader.ReadElementContentAsString()); break;
-                        case "ExacteVertrekVertraging": Console.WriteLine(subReader.LocalName + ": " + subReader.ReadElementContentAsString()); break;
-                    }
-                }
-            }
-        }
+            Logger.Log("Do you wish to save the parsed data? (Y/N)");
 
-        private static void ExtractTrainDestination(XmlReader subReader, string _status)
-        {
-            string status = _status;
+            string saveData = Console.ReadLine();
 
-            while (subReader.Read())
-            {
-                if(subReader.NodeType == XmlNodeType.Element && subReader.LocalName == "StationCode")
-                {
-                    Console.WriteLine(subReader.LocalName + ": " + subReader.ReadElementContentAsString() + " - " + status);
-                    break;
-                }
-            }
+            Logger.Log(saveData);
+
+            //Next up: Save the data in a file/database and do fun stuff. 
         }
 
     }

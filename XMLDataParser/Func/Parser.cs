@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
@@ -16,7 +17,27 @@ namespace XMLDataParser
 
         public Parser(string filePath)
         {
-            this.xmlReader = XmlReader.Create(filePath);
+            try
+            {
+                this.xmlReader = XmlReader.Create(filePath);
+            }
+            catch (FileNotFoundException)
+            {
+                Logger.Log("File path was set incorrectly. Please try again.");
+                FileLoader.DeletePathFile();
+                Environment.Exit(0);
+            }
+            catch (PathTooLongException)
+            {
+                Logger.Log("File path was too long. Please move the file and try again.");
+                FileLoader.DeletePathFile();
+                Environment.Exit(0);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(ex.Message);
+                Environment.Exit(0);
+            }
         }
 
         public List<Station> GetAllParsedStations()

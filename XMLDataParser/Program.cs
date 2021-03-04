@@ -8,12 +8,18 @@ namespace XMLDataParser
         {
             /* 
              * TODO:
-             * Dynamic Filepath
              * Do something with the data
              * 
              */
 
-            const string PATH = "D:/Users/admin/Desktop/University 2021/Projects/XMLDataParser/CleanedXML.xml";
+            string PATH = FileLoader.OpenPathFile();
+
+            if(PATH == "File path not found.")
+            {
+                Logger.Log("Please add the full path to your file.");
+                PATH = Console.ReadLine();
+                FileLoader.SavePathFile(PATH);
+            }
 
             Parser parser = new Parser(PATH);
 
@@ -34,6 +40,7 @@ namespace XMLDataParser
 
             Logger.Log(saveData);
 
+            //Next up: Save the data in a file/database and do fun stuff. 
         }
 
     }

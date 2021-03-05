@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.IO;
-using System.Threading.Tasks;
 
 namespace XMLDataParser
 {
@@ -14,7 +11,7 @@ namespace XMLDataParser
         {
             try
             {
-                return System.IO.File.ReadAllText(PATH);
+                return File.ReadAllText(PATH);
             }
             catch(FileNotFoundException)
             {

@@ -14,11 +14,26 @@ namespace XMLDataParser
 
             string PATH = FileLoader.OpenPathFile();
 
-            if(PATH == "File path not found.")
+            if (PATH == "File path not found.")
             {
                 Logger.Log("Please add the full path to your file.");
                 PATH = Console.ReadLine();
                 FileLoader.SavePathFile(PATH);
+            }
+            else
+            {
+                Logger.Log("There is already a saved file path. Do you wish to add a different file path?. (Y/N)");
+
+                string changePath = "";
+
+                changePath = Console.ReadLine();
+
+                if (changePath.ToUpper() == "Y")
+                {
+                    Logger.Log("Please add the full path to your file.");
+                    PATH = Console.ReadLine();
+                    FileLoader.SavePathFile(PATH);
+                }
             }
 
             Parser parser = new Parser(PATH);
@@ -38,7 +53,7 @@ namespace XMLDataParser
 
             string saveData = Console.ReadLine();
 
-            Logger.Log(saveData);
+            Logger.Log("Under construction");
 
             //Next up: Save the data in a file/database and do fun stuff. 
         }

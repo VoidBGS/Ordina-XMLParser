@@ -6,12 +6,20 @@ namespace XMLDataParser
     public static class FileLoader
     {
         static string PATH = "../netcoreapp3.1/Path.txt";
+        static string EXPORT = "../netcoreapp3.1/ExportPath.txt";
 
-        public static string OpenPathFile()
+        public static string OpenPathFile(bool isExport = false)
         {
             try
             {
-                return File.ReadAllText(PATH);
+                if (isExport == false)
+                {
+                    return File.ReadAllText(PATH);
+                }
+                else
+                {
+                    return File.ReadAllText(EXPORT);
+                }
             }
             catch(FileNotFoundException)
             {
@@ -19,11 +27,18 @@ namespace XMLDataParser
             }
         }
 
-        public static void SavePathFile(string filePath)
+        public static void SavePathFile(string filePath, bool isExport = false)
         {
             try
             {
-                File.WriteAllText("Path.txt", filePath);
+                if (isExport == false)
+                {
+                    File.WriteAllText("Path.txt", filePath);
+                }
+                else
+                {
+                    File.WriteAllText("ExportPath.txt", filePath);
+                }
             }
             catch (Exception ex)
             {
@@ -31,12 +46,19 @@ namespace XMLDataParser
                 Environment.Exit(0);
             }
         }
-        
-        public static void DeletePathFile()
+
+        public static void DeletePathFile(bool isExport = false)
         {
             try
             {
-                File.Delete(PATH);
+                if (isExport == false)
+                {
+                    File.Delete(PATH);
+                }
+                else
+                {
+                    File.Delete(EXPORT);
+                }
             }
             catch(Exception ex)
             {

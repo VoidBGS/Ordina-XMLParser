@@ -35,7 +35,8 @@ namespace XMLDataParser
             }
             catch (Exception ex)
             {
-                Logger.Log(ex.Message);
+                Logger.Log("System encountered an unusual exception. Check if your file is in the XML format and make sure it's not corrupted or open etc. \n" + 
+                    "Exception Message: " + ex.Message);
                 Environment.Exit(0);
             }
         }

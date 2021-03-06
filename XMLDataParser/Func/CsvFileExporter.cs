@@ -12,11 +12,14 @@ namespace XMLDataParser
     {
         private string filePath = "";
 
+        private string fileName = "";
+
         private List<DataModel> models;
 
-        public CsvFileExporter(string filePath, List<DataModel> models)
+        public CsvFileExporter(string filePath, string fileName, List<DataModel> models)
         {
             this.filePath = filePath;
+            this.fileName = fileName;
             this.models = models;
         }
 
@@ -27,12 +30,34 @@ namespace XMLDataParser
 
         private void WriteToFile(IEnumerable records)
         {
-            using (var writer = new StreamWriter(filePath))
-            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            try
             {
-                csv.WriteRecords(records);
+                using (var writer = new StreamWriter(filePath + "/" + fileName + ".csv"))
+                using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                {
+                    csv.WriteRecords(records);
 
-                writer.Flush();
+                    writer.Flush();
+                }
+            }
+            catch(DirectoryNotFoundException)
+            {
+                Logger.Log("The specified directory could not be found. Make sure that the path is correct. " + "\n" + "Specified path - " + filePath);
+                FileLoader.DeletePathFile(true);
+                Environment.Exit(0);
+            }
+            catch (PathTooLongException)
+            {
+                Logger.Log("File path was too long. Please move the file and try again.");
+                FileLoader.DeletePathFile();
+                Environment.Exit(0);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log("System encountered an unusual exception. Check if you file is in the XML format and make sure it's not corrupted or in use etc. \n" +
+                "Exception Message: " + ex.Message);
+                FileLoader.DeletePathFile(true);
+                Environment.Exit(0);
             }
 
         }

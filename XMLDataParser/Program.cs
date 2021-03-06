@@ -1,4 +1,5 @@
 ﻿using System;
+using CsvHelper;
 
 namespace XMLDataParser
 {
@@ -6,19 +7,13 @@ namespace XMLDataParser
     {
         static void Main(string[] args)
         {
-            /* 
-             * TODO:
-             * Do something with the data
-             * 
-             */
+            string path = FileLoader.OpenPathFile();
 
-            string PATH = FileLoader.OpenPathFile();
-
-            if (PATH == "File path not found.")
+            if (path == "File path not found.")
             {
                 Logger.Log("Please add the full path to your file.");
-                PATH = Console.ReadLine();
-                FileLoader.SavePathFile(PATH);
+                path = Console.ReadLine();
+                FileLoader.SavePathFile(path);
             }
             else
             {
@@ -31,12 +26,12 @@ namespace XMLDataParser
                 if (changePath.ToUpper() == "Y")
                 {
                     Logger.Log("Please add the full path to your file.");
-                    PATH = Console.ReadLine();
-                    FileLoader.SavePathFile(PATH);
+                    path = Console.ReadLine();
+                    FileLoader.SavePathFile(path);
                 }
             }
 
-            Parser parser = new Parser(PATH);
+            Parser parser = new Parser(path);
 
             parser.Initialize();
 
@@ -46,14 +41,20 @@ namespace XMLDataParser
 
             if(viewData.ToUpper() == "Y")
             {
-                Logger.LogData(parser.GetAllParsedTrains(), parser.GetAllParsedStations());
+                Logger.LogData(parser.GetAllParsedModels());
             }
 
             Logger.Log("Do you wish to save the parsed data? (Y/N)");
 
             string saveData = Console.ReadLine();
 
-            Logger.Log("Under construction");
+            if (saveData.ToUpper() == "Y")
+            {
+                CsvFileExporter csvFileExporter = new CsvFileExporter("D:/Users/admin/Desktop/University 2021/Projects/XMLDataParser/thing.csv", parser.GetAllParsedModels());
+                csvFileExporter.ExportCsvFile();
+            }
+
+            //D:/Users/admin/Desktop/University 2021/Projects/XMLDataParser/CleanedXML.xml
 
             //Next up: Save the data in a file/database and do fun stuff. 
         }

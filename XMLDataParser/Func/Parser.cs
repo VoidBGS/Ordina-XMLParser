@@ -11,9 +11,9 @@ namespace XMLDataParser
     {
         private XmlReader xmlReader;
 
-        private List<Station> stations = new List<Station>();
+        private List<DataModel> models = new List<DataModel>();
 
-        private List<Train> trains = new List<Train>();
+        bool isProcessing = false;
 
         public Parser(string filePath)
         {
@@ -40,40 +40,46 @@ namespace XMLDataParser
             }
         }
 
-        public List<Station> GetAllParsedStations()
+        public List<DataModel> GetAllParsedModels()
         {
-            return this.stations;
-        }
-
-        public List<Train> GetAllParsedTrains()
-        {
-            return this.trains;
+            return this.models;
         }
 
         public void Initialize()
         {
+            DataModel model = new DataModel();
+
             Logger.Log("Parsing Initialized. This might take a while.");
 
             this.xmlReader.MoveToContent();
 
             while (this.xmlReader.Read())
             {
-                if (this.xmlReader.NodeType == XmlNodeType.Element && this.xmlReader.LocalName == "RitStation")
+                if (this.xmlReader.NodeType == XmlNodeType.Element)
                 {
-                    ExtractStationDetails(this.xmlReader.ReadSubtree());
-                }
 
-                if (this.xmlReader.NodeType == XmlNodeType.Element && this.xmlReader.LocalName == "Trein")
-                {
-                    ExtractTrainDetails(this.xmlReader.ReadSubtree());
+                    if (this.isProcessing == false)
+                    {
+                        model = new DataModel();
+                    }
+
+                    if (this.xmlReader.LocalName == "RitStation")
+                    {
+                        ExtractStationDetails(this.xmlReader.ReadSubtree(), model);
+                    }
+
+                    if (this.xmlReader.LocalName == "Trein")
+                    {
+                        ExtractTrainDetails(this.xmlReader.ReadSubtree(), model);
+                    }
                 }
             }
 
             Logger.Log("Parsing Completed.");
-            Logger.Log("Parsed a total of " + (trains.Count + stations.Count) + " items.");
+            Logger.Log("Parsed a total of " + (models.Count) + " items.");
         }
 
-        private void ExtractStationDetails(XmlReader subReader)
+        private void ExtractStationDetails(XmlReader subReader, DataModel model)
         {
             (string stationCode, string longName) savedVars = (null, null);
 
@@ -94,18 +100,17 @@ namespace XMLDataParser
 
                 if(!String.IsNullOrEmpty(savedVars.longName) && !String.IsNullOrEmpty(savedVars.stationCode))
                 {
-                    Station station = new Station();
+                    model.StationCode = savedVars.stationCode;
+                    model.LongName = savedVars.longName;
 
-                    station.StationCode = savedVars.stationCode;
-                    station.LongName = savedVars.longName;
+                    this.isProcessing = true;
 
-                    stations.Add(station);
                     savedVars = (null, null);
                 }
             }
         }
 
-        private void ExtractTrainDetails(XmlReader subReader)
+        private void ExtractTrainDetails(XmlReader subReader, DataModel model)
         {
             string[] savedVars = new string[6];
             int hit = 0;
@@ -143,15 +148,15 @@ namespace XMLDataParser
 
                     if(hit > 5)
                     {
-                        Train train = new Train();
-                        train.Number = savedVars[0];
-                        train.Type = savedVars[1];
-                        train.OperatingCompany = savedVars[2];
-                        train.Destination = savedVars[3];
-                        train.PlannedDepartureTime = savedVars[4];
-                        train.Delay = savedVars[5];
+                        model.Number = savedVars[0];
+                        model.Type = savedVars[1];
+                        model.OperatingCompany = savedVars[2];
+                        model.Destination = savedVars[3];
+                        model.PlannedDepartureTime = savedVars[4];
+                        model.Delay = savedVars[5];
 
-                        trains.Add(train);
+                        models.Add(model);
+                        this.isProcessing = false;
                         hit = 0;
                     }
 

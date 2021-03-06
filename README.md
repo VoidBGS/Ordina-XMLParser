@@ -1,5 +1,14 @@
 # Ordina-XMLParser
-Custom file parser made for extracting data from weird XML files. Made in Visual Studio using XmlReader in C#.
+Custom file parser made for extracting data from Ordina XML files. Made in Visual Studio using XmlReader in C#.
+
+## Features
+>**XML File Parser** - Working file parser that extracts all available data from the XML format. The extracted information is stored in a CSV File with matching columns.
+
+>**Preview Data Mode** - Before saving the data into a csv file there is an option to preview it and quickly check for mistakes.
+
+>**Dynamic File Path Saving** - Saves your last path to the xml file, so you don't have to change it everytime something goes wrong.
+
+>**Exact Data Extraction** - The Ordina-XMLParser extracts only the most important specified data and not the whole XML file, so you won't need to bother cleaning the data.
 
 ## Developer Note
 This file parser will not work on any other XML files except the ones given to us by Ordina. It is ***very specific*** to the usecase we currently have.

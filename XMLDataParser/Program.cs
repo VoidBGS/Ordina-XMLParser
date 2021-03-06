@@ -79,11 +79,11 @@ namespace XMLDataParser
                 }
                 else if(saveData.ToUpper() == "N")
                 {
-                    Logger.Log("Parsing finished.");
+                    Logger.Log("Parsing finished without saving. Thanks for using my parser, I hope it helped.");
                     Environment.Exit(0);
                 }
 
-                //University 2021/Projects/XMLDataParser/CleanedXML.xml
+
 
             }
         }

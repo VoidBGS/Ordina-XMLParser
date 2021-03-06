@@ -7,12 +7,19 @@ namespace XMLDataParser
     public class DataModel
     {
         public string StationCode { get; set; }
+        
         public string LongName { get; set; }
+        
         public string Number { get; set; }
+        
         public string Type { get; set; }
+        
         public string OperatingCompany { get; set; }
+        
         public string Destination { get; set; }
+        
         public string PlannedDepartureTime { get; set; }
+        
         public string Delay { get; set; }
 
         public string GetInfo()

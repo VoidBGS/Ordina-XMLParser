@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "2QCqF/RIbezYmFxd9uZKeNaV2zX2EUrVk8js2T391W43XmhHhoO3J2YuPodJJB9/Lkj8nFYzyt8EkbxIOgbDdg==",
+  "dgSpecHash": "080Fj6PrfqsfxerV1aV1Fxhf7T61oD1kLGEYWwBzfY3PFbQCeOETkxLiz2EFKeVmKKo5OjDHl7XdtPe5c0O71A==",
   "success": true,
   "projectFilePath": "D:\\Users\\admin\\Desktop\\University 2021\\Projects\\XMLDataParser\\XMLDataParser\\XMLDataParser.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\admin\\.nuget\\packages\\csvhelper\\26.0.1\\csvhelper.26.0.1.nupkg.sha512",
+    "C:\\Users\\admin\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512"
+  ],
   "logs": []
 }

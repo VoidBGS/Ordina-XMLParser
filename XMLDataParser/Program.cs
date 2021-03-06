@@ -6,37 +6,29 @@ namespace XMLDataParser
     {
         static void Main(string[] args)
         {
-            /* 
-             * TODO:
-             * Do something with the data
-             * 
-             */
+            string path = FileLoader.OpenPathFile();
 
-            string PATH = FileLoader.OpenPathFile();
-
-            if (PATH == "File path not found.")
+            if (path == "File path not found.")
             {
-                Logger.Log("Please add the full path to your file.");
-                PATH = Console.ReadLine();
-                FileLoader.SavePathFile(PATH);
+                Logger.Log("Please add the full path to the XML file. Including the file name and mime type.");
+                path = Console.ReadLine();
+                FileLoader.SavePathFile(path);
             }
             else
             {
-                Logger.Log("There is already a saved file path. Do you wish to add a different file path?. (Y/N)");
+                Logger.Log("There is already a saved file XML path. Do you wish to add a different file path? (Y/N)");
 
-                string changePath = "";
-
-                changePath = Console.ReadLine();
+                string changePath = Console.ReadLine();
 
                 if (changePath.ToUpper() == "Y")
                 {
-                    Logger.Log("Please add the full path to your file.");
-                    PATH = Console.ReadLine();
-                    FileLoader.SavePathFile(PATH);
+                    Logger.Log("Please add the full path to your XML file.");
+                    path = Console.ReadLine();
+                    FileLoader.SavePathFile(path);
                 }
             }
 
-            Parser parser = new Parser(PATH);
+            Parser parser = new Parser(path);
 
             parser.Initialize();
 
@@ -44,18 +36,56 @@ namespace XMLDataParser
 
             string viewData = Console.ReadLine();
 
-            if(viewData.ToUpper() == "Y")
+            if (viewData.ToUpper() == "Y")
             {
-                Logger.LogData(parser.GetAllParsedTrains(), parser.GetAllParsedStations());
+                Logger.LogData(parser.GetAllParsedModels());
             }
+            else if (viewData.ToUpper() == "N")
+            {
+                Logger.Log("Do you wish to save the parsed data? (Y/N)");
 
-            Logger.Log("Do you wish to save the parsed data? (Y/N)");
+                string saveData = Console.ReadLine();
 
-            string saveData = Console.ReadLine();
+                if (saveData.ToUpper() == "Y")
+                {
+                    Logger.Log("Name of the file. If a file has the same name it will get overwritten.");
+                    string fileName = Console.ReadLine();
+                    string filePath = FileLoader.OpenPathFile(true);
 
-            Logger.Log("Under construction");
+                    if(filePath == "File path not found.")
+                    {
+                        Logger.Log("Please add the full path to the folder where you wish the file to be saved in");
+                        filePath = Console.ReadLine();
+                        FileLoader.SavePathFile(filePath, true);
+                    }
+                    else
+                    {
+                        Logger.Log("There is already a folder where extracted files are saved. Do you wish to change it? (Y/N)");
 
-            //Next up: Save the data in a file/database and do fun stuff. 
+                        string changePath = Console.ReadLine();
+
+                        if (changePath.ToUpper() == "Y")
+                        {
+                            Logger.Log("Please add the full path to the folder where you wish the file to be saved in.");
+                            filePath = Console.ReadLine();
+                            FileLoader.SavePathFile(filePath, true);
+                        }
+                    }
+                   
+                    CsvFileExporter csvFileExporter = new CsvFileExporter(filePath, fileName, parser.GetAllParsedModels());
+                    csvFileExporter.ExportCsvFile();
+
+                    Logger.Log("Parsing finished. Extracted file has been saved in " + filePath + "\n" + "Thanks for using my parser, I hope it helped.");
+                }
+                else if(saveData.ToUpper() == "N")
+                {
+                    Logger.Log("Parsing finished.");
+                    Environment.Exit(0);
+                }
+
+                //University 2021/Projects/XMLDataParser/CleanedXML.xml
+
+            }
         }
 
     }

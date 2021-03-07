@@ -8,7 +8,7 @@ Custom file parser made for extracting data from Ordina XML files. Made in Visua
 
 >**Dynamic File Path Saving** - Saves your added path to both your export folder and XML file. This is added so the user can quickly go through the parsing process, without having to enter in a new file path everytime.
 
->**Exact Data Extraction** - The Ordina-XMLParser extracts only the most important specified data and not the whole XML file, so you won't need to bother cleaning the data.
+>**Exact Data Extraction** - The Ordina-XMLParser extracts only the most important specified data and not the whole XML file, so you won't need to bother cleaning the entire data.
 
 ### Extracted Data Example
 ![Extracte Data Picture](https://i.ibb.co/d01XZbq/Screenshot-21.png)

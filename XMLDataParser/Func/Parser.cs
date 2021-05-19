@@ -155,10 +155,13 @@ namespace XMLDataParser
                         model.Destination = savedVars[3];
                         model.PlannedDepartureTime = savedVars[4];
                         model.Delay = savedVars[5];
-
-                        models.Add(model);
-                        this.isProcessing = false;
-                        hit = 0;
+                        
+                        if(!String.IsNullOrEmpty(model.OperatingCompany) && model.OperatingCompany == "NS")
+                        {
+                            models.Add(model);
+                            this.isProcessing = false;
+                            hit = 0;
+                        }
                     }
 
                 }

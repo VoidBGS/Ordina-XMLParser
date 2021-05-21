@@ -25,7 +25,7 @@ namespace XMLDataParser
         public string GetInfo()
         {
             string info =
-                "**********Station *********** " + "\n" +
+                "********** Station *********** " + "\n" +
                 "Code: " + this.StationCode + "\n" +
                 "Name: " + this.LongName + "\n" +
                 "*********** Train ************" + "\n" +
